@@ -11,7 +11,9 @@ export const signup = async (req, res) => {
     }
 
     if (password.length < 6) {
-      return res.status(400).json({ message: "Password must be at least 6 characters" });
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters" });
     }
 
     const user = await User.findOne({ email });
@@ -43,6 +45,7 @@ export const signup = async (req, res) => {
     }
   } catch (error) {
     console.log("Error in signup controller", error.message);
+    console.error("Full error:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
