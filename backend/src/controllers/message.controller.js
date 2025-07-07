@@ -7,7 +7,9 @@ import { getReceiverSocketId, io } from "../lib/socket.js";
 export const getUsersForSidebar = async (req, res) => {
   try {
     const loggedInUserId = req.user._id;
-    const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
+    const filteredUsers = await User.find({
+      _id: { $ne: loggedInUserId },
+    }).select("-password");
 
     res.status(200).json(filteredUsers);
   } catch (error) {
@@ -37,15 +39,37 @@ export const getMessages = async (req, res) => {
 
 export const sendMessage = async (req, res) => {
   try {
-    const { text, image } = req.body;
+    const { text, image, video } = req.body;
     const { id: receiverId } = req.params;
     const senderId = req.user._id;
 
     let imageUrl;
+    let videoUrl;
+
+    // Upload to Cloudinary with optimizations
     if (image) {
-      // Upload base64 image to cloudinary
-      const uploadResponse = await cloudinary.uploader.upload(image);
+      const uploadResponse = await cloudinary.uploader.upload(image, {
+        resource_type: "image",
+        transformation: [
+          { width: 800, height: 800, crop: "limit" }, // Limit max dimensions
+          { quality: "auto:good" }, // Auto quality optimization
+          { fetch_format: "auto" }, // Auto format (WebP when supported)
+        ],
+      });
       imageUrl = uploadResponse.secure_url;
+    }
+
+    if (video) {
+      const uploadResponse = await cloudinary.uploader.upload(video, {
+        resource_type: "video",
+        transformation: [
+          { width: 720, crop: "scale" }, // Scale to 720p max
+          { quality: "auto:good" }, // Auto quality
+          { video_codec: "h264" }, // Efficient codec
+        ],
+        chunk_size: 6000000, // 6MB chunks for better handling
+      });
+      videoUrl = uploadResponse.secure_url;
     }
 
     const newMessage = new Message({
@@ -53,6 +77,7 @@ export const sendMessage = async (req, res) => {
       receiverId,
       text,
       image: imageUrl,
+      video: videoUrl,
     });
 
     await newMessage.save();
