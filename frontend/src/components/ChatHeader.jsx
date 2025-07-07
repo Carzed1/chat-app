@@ -20,11 +20,11 @@ const ChatHeader = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5" />
       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-secondary/10 to-transparent rounded-full blur-2xl" />
-      
+
       <div className="relative z-10 flex items-center justify-between">
         <div className="flex items-center gap-4">
           {/* Avatar */}
-          <motion.div 
+          <motion.div
             className="avatar"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.2 }}
@@ -57,14 +57,14 @@ const ChatHeader = () => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.1 }}
           >
-            <motion.h3 
+            <motion.h3
               className="font-bold text-xl bg-gradient-to-r from-base-content to-base-content/80 bg-clip-text text-transparent"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
             >
               {selectedUser.fullName}
             </motion.h3>
-            <motion.p 
+            <motion.p
               className="text-sm flex items-center gap-2 mt-1"
               initial={{ y: 5, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -77,7 +77,7 @@ const ChatHeader = () => {
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <motion.span 
+                  <motion.span
                     className="w-2 h-2 bg-green-500 rounded-full shadow-sm"
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
@@ -100,7 +100,7 @@ const ChatHeader = () => {
         </div>
 
         {/* Action buttons */}
-        <motion.div 
+        <motion.div
           className="flex items-center gap-3"
           initial={{ x: 10, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}

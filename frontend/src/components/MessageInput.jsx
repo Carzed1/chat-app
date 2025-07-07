@@ -184,19 +184,16 @@ const MessageInput = () => {
             <Video size={18} />
           </motion.button>
 
-
-          
+          <motion.button
+            type="submit"
+            className="btn btn-primary btn-circle btn-sm"
+            disabled={!text.trim() && !mediaPreview}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Send size={18} />
+          </motion.button>
         </div>
-
-        <motion.button
-          type="submit"
-          className="btn btn-primary btn-circle btn-sm"
-          disabled={!text.trim() && !mediaPreview}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <Send size={18} />
-        </motion.button>
       </form>
     </motion.div>
   );
