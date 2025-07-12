@@ -25,7 +25,8 @@ if (missingEnvVars.length > 0) {
 const PORT = process.env.PORT || 5001;
 const __dirname = path.resolve();
 
-app.use(express.json({ limit: "10mb" })); // Increased limit to handle larger images
+app.use(express.json({ limit: "50mb" })); // Reduced limit to handle large uploads more reliably
+app.use(express.urlencoded({ limit: "50mb", extended: true })); // Handle form data with same limit
 app.use(cookieParser());
 app.use(
   cors({
@@ -52,3 +53,8 @@ server.listen(PORT, () => {
   console.log("server is running on PORT:" + PORT);
   connectDB();
 });
+
+// Increase server timeout for large file uploads (but more conservative)
+server.timeout = 300000; // 5 minutes (reduced from 15 minutes)
+server.keepAliveTimeout = 120000; // 2 minutes (reduced from 5 minutes)
+server.headersTimeout = 120000; // 2 minutes (reduced from 5 minutes)
