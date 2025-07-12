@@ -1,4 +1,4 @@
-### Setup .env file
+### Setup .env file in backend folder (backend/.env)
 
 ```js
 MONGODB_URI=...
@@ -23,3 +23,9 @@ npm run build
 ```shell
 npm start
 ```
+
+### Start the frontend
+```shell
+cd frontend
+npm run dev```
+
