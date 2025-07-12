@@ -62,7 +62,7 @@ const ChatContainer = () => {
         className="flex-1 flex flex-col overflow-auto"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.2 }}
       >
         <ChatHeader />
         <MessageSkeleton />
@@ -73,10 +73,10 @@ const ChatContainer = () => {
 
   return (
     <motion.div
-      className="flex-1 flex flex-col overflow-auto"
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3 }}
+      className="flex-1 flex flex-col overflow-auto relative"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2 }}
     >
       <ChatHeader />
 
@@ -89,20 +89,18 @@ const ChatContainer = () => {
                 message.senderId === authUser._id ? "chat-end" : "chat-start"
               }`}
               ref={index === messages.length - 1 ? messageEndRef : null}
-              initial={{ opacity: 0, y: 20, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20, scale: 0.9 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
               transition={{
-                duration: 0.3,
-                delay: index * 0.05,
-                type: "spring",
-                stiffness: 100,
+                duration: 0.2,
+                delay: index * 0.02,
               }}
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ scale: 1.01 }}
             >
               <motion.div
                 className="chat-image avatar"
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
               >
                 <div className="size-10 rounded-full border-2 border-primary/20">
@@ -124,16 +122,16 @@ const ChatContainer = () => {
               </div>
               <motion.div
                 className="chat-bubble flex flex-col"
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.2 }}
               >
                 {message.image && (
                   <motion.div
                     className="relative group"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3 }}
-                    whileHover={{ scale: 1.05 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                    whileHover={{ scale: 1.02 }}
                   >
                     <motion.img
                       src={message.image}
@@ -141,11 +139,11 @@ const ChatContainer = () => {
                       className="sm:max-w-[200px] rounded-md mb-2 cursor-pointer shadow-lg transition-shadow hover:shadow-xl"
                       onClick={(e) => {
                         e.stopPropagation();
-                      
+
                         handleImageClick(message.image);
                       }}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.95 }}
+                      whileHover={{ scale: 1.01 }}
+                      whileTap={{ scale: 0.98 }}
                       transition={{ duration: 0.2 }}
                     />
                     {/* Zoom overlay hint */}
@@ -156,9 +154,9 @@ const ChatContainer = () => {
                     >
                       <motion.div
                         className="bg-white bg-opacity-90 text-black px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2 shadow-lg"
-                        initial={{ scale: 0.8, y: 10 }}
+                        initial={{ scale: 1, y: 0 }}
                         animate={{ scale: 1, y: 0 }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ duration: 0.1 }}
                       >
                         <svg
                           className="w-4 h-4"
@@ -181,16 +179,16 @@ const ChatContainer = () => {
                 {message.video && (
                   <motion.div
                     className="relative"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
                   >
                     <motion.video
                       src={message.video}
                       controls
                       className="sm:max-w-[200px] rounded-md mb-2 shadow-lg"
                       preload="metadata"
-                      whileHover={{ scale: 1.05 }}
+                      whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.2 }}
                     >
                       Your browser does not support the video tag.
@@ -205,9 +203,6 @@ const ChatContainer = () => {
       </div>
 
       <MessageInput />
-
-      {/* Test button for debugging */}
-     
 
       {/* Image Modal */}
       <ImageModal
