@@ -27,5 +27,6 @@ npm start
 ### Start the frontend
 ```shell
 cd frontend
-npm run dev```
+npm run dev
+```
 
